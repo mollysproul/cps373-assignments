@@ -1,0 +1,55 @@
+_____________________________________
+Running Client Server Topology
+    manager.add_message(2, 1); // 1000 ms
+    manager.add_message(5, 1); // 1000 ms
+    manager.add_message(4, 1); // 1000 ms
+FORWARD :: R5 (R1, R1)
+RECIEVED:: R1
+FORWARD :: R2 (R1, R1)
+FORWARD :: R4 (R1, R1)
+RECIEVED:: R1
+RECIEVED:: R1
+total time took: 999ms
+
+_____________________________________
+Running Ring Topology
+    manager.add_message(1, 3); // 200 ms
+    manager.add_message(8, 4); // 400ms
+    manager.add_message(6, 7); // 700ms
+FORWARD :: R8 (R1, R4) //
+FORWARD :: R1 (R2, R3)
+FORWARD :: R6 (R5, R7)
+FORWARD :: R1 (R2, R4)
+FORWARD :: R2 (R3, R3)
+RECIEVED:: R3
+FORWARD :: R5 (R4, R7)
+FORWARD :: R4 (R3, R7)
+FORWARD :: R2 (R3, R4)
+FORWARD :: R3 (R2, R7)
+FORWARD :: R3 (R4, R4)
+RECIEVED:: R4
+FORWARD :: R2 (R1, R7)
+FORWARD :: R1 (R8, R7)
+FORWARD :: R8 (R7, R7)
+RECIEVED:: R7
+total time took: 699ms
+
+_____________________________________
+Running Complex Network
+    manager.add_message(8, 6); // R8 --> R9 --> R6 // 600ms
+    manager.add_message(1, 9); //R1 --> R5 --> R6 --> R9 //2000 ms
+    manager.add_message(4, 5); // R4 --> R7 --> R2 --> R1 --> R5 //2300
+FORWARD :: R4 (R7, R5) //300
+FORWARD :: R8 (R9, R6) //400
+FORWARD :: R9 (R6, R6) //200
+RECIEVED:: R6
+FORWARD :: R7 (R2, R5) //500
+FORWARD :: R2 (R1, R5) //300
+FORWARD :: R1 (R5, R9) //1200
+FORWARD :: R5 (R6, R9) //600
+FORWARD :: R6 (R9, R9) //200
+RECIEVED:: R9
+FORWARD :: R1 (R5, R5) //1200
+RECIEVED:: R5
+total time took: 2399ms
+

@@ -32,21 +32,3 @@ iostream
 ../include/router.hpp
 /Users/mollysproul/cps373-assignments/04-topology/include/router.hpp
 
-/Users/mollysproul/cps373-assignments/04-topology/src/manager.cpp
-chrono
--
-thread
--
-../include/manager.hpp
-/Users/mollysproul/cps373-assignments/04-topology/include/manager.hpp
-../include/router.hpp
-/Users/mollysproul/cps373-assignments/04-topology/include/router.hpp
-
-/Users/mollysproul/cps373-assignments/04-topology/src/router.cpp
-iostream
--
-../include/manager.hpp
-/Users/mollysproul/cps373-assignments/04-topology/include/manager.hpp
-../include/router.hpp
-/Users/mollysproul/cps373-assignments/04-topology/include/router.hpp
-

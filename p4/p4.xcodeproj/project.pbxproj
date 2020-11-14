@@ -6,10 +6,15 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXFileReference section */
+		2AC129992559D77C006A6754 /* 04-topology */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "04-topology"; path = "../04-topology"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		2AC129922559D76E006A6754 = {
 			isa = PBXGroup;
 			children = (
+				2AC129992559D77C006A6754 /* 04-topology */,
 			);
 			sourceTree = "<group>";
 		};
