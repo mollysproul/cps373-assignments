@@ -1,55 +1,59 @@
-_____________________________________
-Running Client Server Topology
-    manager.add_message(2, 1); // 1000 ms
-    manager.add_message(5, 1); // 1000 ms
-    manager.add_message(4, 1); // 1000 ms
-FORWARD :: R5 (R1, R1)
-RECIEVED:: R1
-FORWARD :: R2 (R1, R1)
-FORWARD :: R4 (R1, R1)
-RECIEVED:: R1
-RECIEVED:: R1
-total time took: 999ms
+For clarity, the messages will be abreviated to m1, m2, m3.
 
-_____________________________________
-Running Ring Topology
-    manager.add_message(1, 3); // 200 ms
-    manager.add_message(8, 4); // 400ms
-    manager.add_message(6, 7); // 700ms
-FORWARD :: R8 (R1, R4) //
-FORWARD :: R1 (R2, R3)
-FORWARD :: R6 (R5, R7)
-FORWARD :: R1 (R2, R4)
-FORWARD :: R2 (R3, R3)
-RECIEVED:: R3
-FORWARD :: R5 (R4, R7)
-FORWARD :: R4 (R3, R7)
-FORWARD :: R2 (R3, R4)
-FORWARD :: R3 (R2, R7)
-FORWARD :: R3 (R4, R4)
-RECIEVED:: R4
-FORWARD :: R2 (R1, R7)
-FORWARD :: R1 (R8, R7)
-FORWARD :: R8 (R7, R7)
-RECIEVED:: R7
-total time took: 699ms
 
-_____________________________________
-Running Complex Network
-    manager.add_message(8, 6); // R8 --> R9 --> R6 // 600ms
-    manager.add_message(1, 9); //R1 --> R5 --> R6 --> R9 //2000 ms
-    manager.add_message(4, 5); // R4 --> R7 --> R2 --> R1 --> R5 //2300
-FORWARD :: R4 (R7, R5) //300
-FORWARD :: R8 (R9, R6) //400
-FORWARD :: R9 (R6, R6) //200
-RECIEVED:: R6
-FORWARD :: R7 (R2, R5) //500
-FORWARD :: R2 (R1, R5) //300
-FORWARD :: R1 (R5, R9) //1200
-FORWARD :: R5 (R6, R9) //600
-FORWARD :: R6 (R9, R9) //200
-RECIEVED:: R9
-FORWARD :: R1 (R5, R5) //1200
-RECIEVED:: R5
-total time took: 2399ms
 
+Client Server Topology took 999ms to complete.
+m1: R2 --> R1 (1000 ms)
+m2: R5 --> R1 (1000 ms)
+m3: R4 --> R1 (1000 ms)
+None of the messages "interfere" with one another, so the 999ms time to complete should reflect the longest time it takes to send message m_i
+Here is a table to illustrate where each "message" is at each time in the topology.
+______________________________________________________________________
+t = | 0 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000 |
+---------------------------------------------------------------------|
+m1: | R2 ------------------------------------------------------> R1  |
+m2: | R5 ------------------------------------------------------> R1  |
+m3: | R4 ------------------------------------------------------> R1  |
+_____________________________________________________________________|
+
+
+
+Ring Topology took 699ms to complete
+m1: R1 --> R2 --> R3 (200 ms)
+m2: R8 --> R1 --> R2 --> R3 --> R4 (400 ms)
+m3: R6 --> R5 --> R4 --> R3 --> R2 --> R1 --> R8 --> R7 (700 ms)
+
+Here is a table to illustrate where each "message" is at each time in the topology.
+____________________________________________________
+t = | 0  | 100 | 200 | 300 | 400 | 500 | 600 | 700 |
+---------------------------------------------------|
+m1: | R1 -> R2 -> R3                               |
+m2: | R8 -> R1 -> R2 -> R3 -> R4                   |
+m3: | R6 -> R5 -> R4 -> R3 -> R2 -> R1 -> R8 -> R7 |
+___________________________________________________|
+
+
+
+The Complex Network took 2399ms
+m1: R8 --> R9 --> R6 (600 ms)
+m2: R1 --> R5 --> R6 --> R9 (2000 ms)
+m3: R4 --> R7 --> R2 --> R1 --> R5 (2300 ms on its own, but 2400 ms actually)
+
+Here is a table to illustrate where each "message" is at each time in the topology.
+______________________________________________________________________________
+t = | 0  | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000 | 1100 |
+-----------------------------------------------------------------------------|
+m1: | R8 ------------------->R9-------->R6                                  |
+m2: | R1 ------------------------------------------------------------------->|
+m3: | R4 ------------>R7---------------------------->R2--------------->R1    |
+_____________________________________________________________________________|
+
+_________________________________________________________________________________
+t = | 1200 | 1300 | 1400 | 1500 | 1600 | 1700 | 1800 | 1900 | 2000 | ... | 2400 |
+--------------------------------------------------------------------------------|
+m1: |                                                                           |
+m2: |>R5-------------------------------------->R6----------->R9                 |
+m3: |--------------------------------------------------------------------->R5   |
+________________________________________________________________________________|
+
+m3 must wait from t=1100 to t=1200 because m2 is already in the pipeline frmo R1 to R5. Once m2 is received by R5, R1 can send m3 to R5.

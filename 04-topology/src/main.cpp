@@ -84,7 +84,7 @@ int run_client_server_topology() {
     
     // stop timer
     auto deser_time = std::chrono::high_resolution_clock::now() - start;
-    std::cout   << "total time took: "
+    std::cout   << "Time took for Client Server Topology: "
                 << std::chrono::duration_cast<std::chrono::milliseconds>(deser_time).count() << "ms"
                 << std::endl << std::endl;
     return 0;
@@ -141,7 +141,7 @@ int run_ring_topology() {
     }
     // stop timer
     auto deser_time = std::chrono::high_resolution_clock::now() - start;
-    std::cout   << "total time took: "
+    std::cout   << "Time took for Ring Topology: "
                 << std::chrono::duration_cast<std::chrono::milliseconds>(deser_time).count() << "ms"
                 << std::endl << std::endl;
         
@@ -200,7 +200,7 @@ int run_complex_network() {
     
     // stop timer
     auto deser_time = std::chrono::high_resolution_clock::now() - start;
-    std::cout   << "total time took: "
+    std::cout   << "Time took for Complex Network: "
                 << std::chrono::duration_cast<std::chrono::milliseconds>(deser_time).count() << "ms"
                 << std::endl << std::endl;
     
